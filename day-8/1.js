@@ -492,4 +492,10 @@ entriesOutput.forEach((item)=>{
 const [user1, user2] = ['alex','john']
 console.log(user1, user2) ;
 
-// object assign
+// object 
+const productss={
+    name:'mobile',
+    price:'Rs50000'
+}
+// Note to change the default property name you can use productName:variablename;
+// Note we can also add new property and assign them a default value 'property=value'
