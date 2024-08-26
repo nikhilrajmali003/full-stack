@@ -143,4 +143,21 @@ console.log(data);
 fetchdata();
 
 
-const async fetchdat()
+//NOTE STEP-1 create a function and make it async
+
+const apikey = '909d6461103c15e65a08fdc29010e158'
+const city1 = 'Tokyo'
+const city2 ='London'
+const city3 = 'Mumbai'
+
+const url1 = 'https://api.openweathermap.org/data/2.5/weather?q=${city1}&appid=${apikey}'
+const url2 = 'https://api.openweathermap.org/data/2.5/weather?q=${city2}&appid=${apikey}'
+const url3 = 'https://api.openweathermap.org/data/2.5/weather?q=${city3}&appid=${apikey}'
+
+
+const fetchWeatherData = async () => {
+
+  console.log(Promise.all([fetch(url1),fetch(url2),fetch(url3)]))
+}
+
+fetchWeatherData()
