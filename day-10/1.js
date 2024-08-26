@@ -1,15 +1,15 @@
-console.log(window) ;
+// console.log(window) ;
 
-setTimeout(()=>{
-console.log('hello')
-},3000)
+// setTimeout(()=>{
+// console.log('hello')
+// },3000)
 
-const clrInterval = setInterval(()=>{
-    console.log('run in every 1 sec')
-},1000)
+// const clrInterval = setInterval(()=>{
+//     console.log('run in every 1 sec')
+// },1000)
 
-//to clear the execution of the setInterval
-clearInterval(clrInterval);
+// //to clear the execution of the setInterval
+// clearInterval(clrInterval);
 
 //event loop ;
 //call stack;
@@ -83,49 +83,49 @@ clearInterval(clrInterval);
 
 // //creating a promise 
 
-const willYouPassInExam = new Promise((resolve,reject)=>{
-    reject('no')
-})
-console.log(willYouPassInExam)
+// const willYouPassInExam = new Promise((resolve,reject)=>{
+//     reject('no')
+// })
+// console.log(willYouPassInExam)
 
 
-// console.log(fetch('https://restcountries.com/v3.1/all'))
+// // console.log(fetch('https://restcountries.com/v3.1/all'))
 
 
-function data(){
+// function data(){
 
-    return new Promise((resolve,reject)=>{
-      const data ='failed to fetch data' 
-      reject(data);
-    })
-}
+//     return new Promise((resolve,reject)=>{
+//       const data ='failed to fetch data' 
+//       reject(data);
+//     })
+// }
 
-console.log(data())
-data().then((data)=>{
-    console.log(data)
-}).catch((err)=>{
-    console.error(err)
-}).finally(()=>{
-    console.log('run everytime')
-})
+// console.log(data())
+// data().then((data)=>{
+//     console.log(data)
+// }).catch((err)=>{
+//     console.error(err)
+// }).finally(()=>{
+//     console.log('run everytime')
+// })
 
-//REVIEW  in the case of the promise fulfilled we have to handle with .then() method
-//REVIEW in the case of the promise is rejected we have to handle with .catch() method
-//REVIEW finally() will always run in both cases.
+// //REVIEW  in the case of the promise fulfilled we have to handle with .then() method
+// //REVIEW in the case of the promise is rejected we have to handle with .catch() method
+// //REVIEW finally() will always run in both cases.
 
 
 
-fetch('https://restcountries.com/v3.1/all').then((res)=>{
-    return res.json()
-    }).then((data)=>{
-        // data.forEach((item) => {
-        //   const h1=document.createElement('h1');
-        //   h1.innerHTML=item.name.common
-        // });
-console.log(data);
-}).catch((err)=>{
-    console.log(err);
-})
+// fetch('https://restcountries.com/v3.1/all').then((res)=>{
+//     return res.json()
+//     }).then((data)=>{
+//         // data.forEach((item) => {
+//         //   const h1=document.createElement('h1');
+//         //   h1.innerHTML=item.name.common
+//         // });
+// console.log(data);
+// }).catch((err)=>{
+//     console.log(err);
+// })
 
 
 
@@ -135,29 +135,61 @@ console.log(data);
 // Note to use the await keyword
 
 
-const fetchdata=async()=>{ 
-const res=await fetch('https://randomuser.me/api/');
-const data=await res.json();
-console.log(data);
-}
-fetchdata();
+// const fetchdata=async()=>{ 
+// const res=await fetch('https://randomuser.me/api/');
+// const data=await res.json();
+// console.log(data);
+// }
+// fetchdata();
 
 
 //NOTE STEP-1 create a function and make it async
 
-const apikey = '909d6461103c15e65a08fdc29010e158'
-const city1 = 'Tokyo'
-const city2 ='London'
-const city3 = 'Mumbai'
+// const apikey = '909d6461103c15e65a08fdc29010e158'
+// const city1 = 'Tokyo'
+// const city2 ='London'
+// const city3 = 'Mumbai'
 
-const url1 = 'https://api.openweathermap.org/data/2.5/weather?q=${city1}&appid=${apikey}'
-const url2 = 'https://api.openweathermap.org/data/2.5/weather?q=${city2}&appid=${apikey}'
-const url3 = 'https://api.openweathermap.org/data/2.5/weather?q=${city3}&appid=${apikey}'
+// const url1 = 'https://api.openweathermap.org/data/2.5/weather?q=${city1}&appid=${apikey}'
+// const url2 = 'https://api.openweathermap.org/data/2.5/weather?q=${city2}&appid=${apikey}'
+// const url3 = 'https://api.openweathermap.org/data/2.5/weather?q=${city3}&appid=${apikey}'
 
 
-const fetchWeatherData = async () => {
+// const fetchWeatherData = async () => {
 
-  console.log(Promise.all([fetch(url1),fetch(url2),fetch(url3)]))
+// //   console.log(Promise.all([fetch(url1),fetch(url2),fetch(url3)]))
+// const [res1, res2, res3] = await Promise.all([fetch(url1),fetch(url2),fetch(url3)])
+// console.log(res1,res2,res3);
+
+// }
+
+// fetchWeatherData()
+
+
+
+// Note : Protoypes
+
+const animal={
+    eats:true,
+    Wake(){
+        console.log('Animal is waking up');
+    }
+}
+const rabbit={
+    run:true,
+    __proto__:animal
 }
 
-fetchWeatherData()
+// NOTE Object.create 
+const lino=Object.create(animal);
+console.log(lino.eats);
+console.log(lino.Wake());
+// we can also use this
+// rabbit.__proto__=animal;
+
+console.log(animal);
+
+
+
+// way to create an object;
+// constructor function;
