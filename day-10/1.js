@@ -1,195 +1,144 @@
-// console.log(window) ;
-
-// setTimeout(()=>{
-// console.log('hello')
-// },3000)
-
-// const clrInterval = setInterval(()=>{
-//     console.log('run in every 1 sec')
-// },1000)
-
-// //to clear the execution of the setInterval
-// clearInterval(clrInterval);
-
-//event loop ;
-//call stack;
-//execution context ;
-//global execution context ;
-//callback queue ;
-
-//NOTE callback ;
-
-// function first(callback){
-//     console.log(callback)
-// const d = 'hello ' ;
-// callback(d);
+//NOTE : Protoypes in javascript ;
+// const obj = {
+//   name : "ritesh"
 // }
 
-// function second(data){
-//     console.log(data)
+// console.log(obj.__proto__) ;
+
+// const animal = {
+//   eats : true,
+//   walk(){
+//     console.log('is walking')
+//   }
+// }
+// const rabbit = {
+//   run : true,
+//   __proto__ : animal
 // }
 
-// first((data)=>{
-// console.log(data)
-// })
-
-//when next step is dependent on previour one in the case of the callback leads to callback hell ..
-
-// function step1(callback){
-//    setTimeout(()=>{
-//   console.log('step1 complete');
-//   callback();
-//    },1000) 
-
-// }
-
-// function step2(callback){
-//    setTimeout(()=>{
-//   console.log('step2 complete');
-//   callback();
-//    },1000) 
-
-// }
-
-// function step3(callback){
-//    setTimeout(()=>{
-//   console.log('step3 complete');
-//   callback();
-//    },1000) 
-
-// }
-// function step4(){
-//    setTimeout(()=>{
-//   console.log('step4 complete');
-  
-//    },1000) 
-
-// }
+//NOTE Object.create creates an empty object and sets the prototype of the newly created object to the value we have passed in the create method ;
 
 
-// step1(()=>{
-//     step2(()=>{
-//         step3(()=>{
-//             step4()
-//         })
-//     })
-// })
-
-// //Promises : 
-
-// // promises = placeholder ,it is a js object
-// //promises = always return from a function
-// //promises have different stages => fulfilled , rejected 
-
-// //creating a promise 
-
-// const willYouPassInExam = new Promise((resolve,reject)=>{
-//     reject('no')
-// })
-// console.log(willYouPassInExam)
-
-
-// // console.log(fetch('https://restcountries.com/v3.1/all'))
-
-
-// function data(){
-
-//     return new Promise((resolve,reject)=>{
-//       const data ='failed to fetch data' 
-//       reject(data);
-//     })
-// }
-
-// console.log(data())
-// data().then((data)=>{
-//     console.log(data)
-// }).catch((err)=>{
-//     console.error(err)
-// }).finally(()=>{
-//     console.log('run everytime')
-// })
-
-// //REVIEW  in the case of the promise fulfilled we have to handle with .then() method
-// //REVIEW in the case of the promise is rejected we have to handle with .catch() method
-// //REVIEW finally() will always run in both cases.
-
-
-
-// fetch('https://restcountries.com/v3.1/all').then((res)=>{
-//     return res.json()
-//     }).then((data)=>{
-//         // data.forEach((item) => {
-//         //   const h1=document.createElement('h1');
-//         //   h1.innerHTML=item.name.common
-//         // });
-// console.log(data);
-// }).catch((err)=>{
-//     console.log(err);
-// })
-
-
-
-// asyn await;
-// new version of promise by using async await your code look more like synchronous line by line
-// Note async await both are keyword
-// Note to use the await keyword
-
-
-// const fetchdata=async()=>{ 
-// const res=await fetch('https://randomuser.me/api/');
-// const data=await res.json();
-// console.log(data);
-// }
-// fetchdata();
-
-
-//NOTE STEP-1 create a function and make it async
-
-// const apikey = '909d6461103c15e65a08fdc29010e158'
-// const city1 = 'Tokyo'
-// const city2 ='London'
-// const city3 = 'Mumbai'
-
-// const url1 = 'https://api.openweathermap.org/data/2.5/weather?q=${city1}&appid=${apikey}'
-// const url2 = 'https://api.openweathermap.org/data/2.5/weather?q=${city2}&appid=${apikey}'
-// const url3 = 'https://api.openweathermap.org/data/2.5/weather?q=${city3}&appid=${apikey}'
-
-
-// const fetchWeatherData = async () => {
-
-// //   console.log(Promise.all([fetch(url1),fetch(url2),fetch(url3)]))
-// const [res1, res2, res3] = await Promise.all([fetch(url1),fetch(url2),fetch(url3)])
-// console.log(res1,res2,res3);
-
-// }
-
-// fetchWeatherData()
-
-
-
-// Note : Protoypes
-
-const animal={
-    eats:true,
-    Wake(){
-        console.log('Animal is waking up');
-    }
-}
-const rabbit={
-    run:true,
-    __proto__:animal
-}
-
-// NOTE Object.create 
-const lino=Object.create(animal);
-console.log(lino.eats);
-console.log(lino.Wake());
+// const lion = Object.create(animal) ;
+// console.log(lion)
+// console.log(lion.eats)
 // we can also use this
-// rabbit.__proto__=animal;
+// rabbit.__proto__ = animal ;
 
-console.log(animal);
+// console.log(animal)
+// console.log(rabbit)
+// console.log(animal.eats)
+// console.log(rabbit.eats)
 
 
+//ways to create an object ;
 
-// way to create an object;
-// constructor function;
+//constructor functions ;
+
+// function Animal(name){
+//   this.name = name ;
+//   this.walk = function(){
+//     console.log(`${this.name} is walking`)
+//   }
+// }
+
+//NOTE we can directly set methods on the prototype of the animal which are then available to the all the instance we are going to create with the animal.
+
+// Animal.prototype.walk = function(){
+//     console.log(`${this.name} is walking`)
+// }
+
+//ways to call constructor function
+//always call with new keyword ;
+
+// const rabbit = new Animal('rabbit')
+// console.log(rabbit)
+
+// const lion = new Animal('lion');
+// console.log(lion.walk())
+
+
+// console.log(rabbit.__proto__)
+
+
+// const arr = [1,2,3,4];
+// console.log(arr) ;
+
+//another way to create an array in the js
+// const arr2 = new Array();
+// console.log(arr2)
+
+//NOTE directly saving methods on the prototype;
+// Array.prototype.laugh = function(){
+//     console.log('haha')
+// }
+
+// console.log(arr2.laugh()) ;
+
+
+//NOTE - ES6 classes Js ;
+
+// function Animal(name){
+//   this.name = name ;
+//   this.walk = function(){
+//     console.log(`${this.name} is walking`)
+//   }
+// }
+
+//NOTE Converting Above Constructor Function using es6 classes .
+
+//NOTE classes constructor function internally to create a object from that instance 
+//NOTE in the constuctor function we have to manually set the methods on the prototype but with the es6 classes the methods are directly saved to the prototype of that class from it created ;
+
+
+// function Animal(name){
+//   this.name = name ;
+//   this.walk = function(){
+//     console.log(`${this.name} is walking`)
+//   }
+// }
+class Animal{
+    constructor(name){
+this.name = name; 
+    }
+
+ walk(){
+        console.log('animal is walking')
+    } 
+}
+
+const rabbit = new Animal('rabbit');
+
+rabbit.walk()
+
+//Inheritance in the classes ;
+//static methods
+class Lion extends Animal {
+ constructor(name){
+    super(name)
+ }
+static roar(){
+    console.log('lion is roaring')
+ }
+
+}
+
+const lion = new Lion('lion');
+console.log(lion)
+Lion.roar() ;
+
+//Static method is class can be created using static keyword in front of the methods 
+//NOTE static method only called upon directly on the class , it is not work on the instances we have created using that class.
+
+//readonly and private properties and methods
+class Coffeemachine{
+    #wateramount = 100
+    #getwater(){
+        console.log(`coffee machine have ${this.#wateramount}`)
+    }
+
+}
+const coffemachine = new Coffeemachine;
+coffemachine.#wateramount
+coffemachine.#getwater()  
+console.log(coffemachine);
