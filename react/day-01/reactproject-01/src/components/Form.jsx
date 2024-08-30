@@ -11,10 +11,18 @@ function Form({password,username,setPassword,setUsername})
         console.log(event.target.value);
         setPassword(event.target.value);
         }
+    const handleSubmit=(event)=>{
+event.preventDefault();
+const data ={
+  username :username,
+  password :password
+}
+console.log(data);
+    }
   return (
     <div>
         <div></div>
-        <form >
+        <form onSubmit={handleSubmit}>
       <label htmlFor="username">Username</label>
       
       <input onChange={handleUsernameChange}type="text" id='username' />
