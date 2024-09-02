@@ -26,4 +26,4 @@ export default Input
 
 
 //controlled components =>  the input values are controlled by react state 
-//uncontrolled components => by using useRef we can directly access the input value from DOM  .
+//uncontrolled components => by using useRef we can directly access the input value from DOM  .   
