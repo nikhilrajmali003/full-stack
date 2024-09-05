@@ -37,49 +37,64 @@
 
 
 import React, { useEffect , useState } from 'react'
-import Product from './components/Product';
-import Description from './components/Description';
-import Profile from './components/Profile';
-import Reducer from './components/Reducer';
+import Product from './component/Product';
+import Description from './component/Description';
+import Profile from './component/Profile';
+import Reducer from './component/Reducer';
 
-function App() {
-  const [count ,setCount] = useState(0);
+// function App() {
+//   const [count ,setCount] = useState(0);
 
-//NOTE without dependency array
-  useEffect(()=>{
-    console.log('this will run every time')
-  })
+// //NOTE without dependency array
+//   useEffect(()=>{
+//     console.log('this will run every time')
+//   })
 
-  //NOTE with empty dependency array
-  useEffect(()=>{
-    console.log("this will run one time when page refresh")
-  },[])
+//   //NOTE with empty dependency array
+//   useEffect(()=>{
+//     console.log("this will run one time when page refresh")
+//   },[])
 
-  //note this will run when dependency changes or updated
-  useEffect(()=>{
-    console.log('this will run when count increase')
-  },[count])
+//   //note this will run when dependency changes or updated
+//   useEffect(()=>{
+//     console.log('this will run when count increase')
+//   },[count])
 
-  const data = {
-    user : 'ritesh'
-  }
+//   const data = {
+//     user : 'ritesh'
+//   }
  
 
-  return (
+//   return (
     
-    <div>
-       <Reducer/>
-      {/* <p>{count}</p>
-    <button onClick={()=>{setCount(count+1)}}>increase</button> */}
+//     <div>
+//        <Reducer/>
+//       {/* <p>{count}</p>
+//     <button onClick={()=>{setCount(count+1)}}>increase</button> */}
 
    
-    <Description user={data}/>
-    <Profile user={data}/>
+//     <Description user={data}/>
+//     <Profile user={data}/>
+//     </div>
+//   )
+// }
+
+// export default App
+
+
+// useEffect(callback ,dependeny array) ;
+
+
+
+
+import React from 'react'
+import Reducer from './components/Reducer'
+function App() {
+  return (
+    <div>
+      <Reducer/>
     </div>
   )
 }
 
 export default App
-
-
-// useEffect(callback ,dependeny array) ;
