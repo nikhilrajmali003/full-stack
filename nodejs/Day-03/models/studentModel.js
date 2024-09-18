@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-// Note step 2define the schema
+// Note step 2 define the schema
 const studentSchema=new mongoose.Schema({
     name:{
         type:String,
