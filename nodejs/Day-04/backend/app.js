@@ -1,30 +1,51 @@
-const express = require('express');
-const app = express();
-const dbConnect = require('./db');
-const PORT = 3000;
-const colors = require('colors');
-const cors = require('cors')
-app.use(cors())
-//NOTE fn to connect with the mongodb
-dbConnect();
+const express = require('express') ;
+const colors = require('colors')
+const app = express() ;
+const PORT = 3000 ;
+const dbConnect = require('./db')
+const errorHandler  = require('./middleware/errorHandler')
+const passport = require('passport')
+const session = require('express-session')
 
-//NOTE middleware to parse the req.body data
+require('dotenv').config()
+require('./config/passportConfig')
+const cors = require('cors')
+//NOTE parse the data from the req.body
+app.use(cors()) ;
+
+//NOTE creating a session whenever login with google hit..
+app.use(session({
+  secret: 'my-secret-string',
+  resave: false,    
+  saveUninitialized: false ,  //if something is not store we donot need to create session
+  cookie: { maxAge : 1000 * 60 * 60 * 24 * 5 }
+}))
+
+//NOTE initializing the passport middleware in the express app
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(express.json());
 
-//NOTE Routes middleware
-app.use('/api', require('./routes/userRoutes'));
 
-//NOTE GLOBAL ROUTES HANDLER (middleware)
-app.use((req, res, next) => {
-  res.status(404).json({
-    error: `Requested url ${req.url} not found`,
-  });
-  next();
-});
+dbConnect() ;
 
-//global error handler for our app this will send response for all the errors in our app
 
-//listening on the server
-app.listen(PORT, () => {
-  console.log(colors.yellow(`App is listening on the port:${PORT}`));
-});
+app.use('/api',require('./routes/userRoutes'))
+
+//global route handler 
+app.use((req,res,next)=>{
+    res.status(404).send(`requested url ${req.url} not found`)
+    next()
+})
+
+//global error handler middleware
+app.use(errorHandler) ;
+
+
+app.listen(PORT , ()=>{
+    console.log(colors.yellow(`App is listening on the PORT:${PORT}`))
+})
+
+
+// NOTE :-Multer library use
+  

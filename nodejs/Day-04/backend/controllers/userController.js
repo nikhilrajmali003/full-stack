@@ -1,51 +1,70 @@
-const User = require('./../models/userModel')
-const bcrypt = require('bcrypt')
+const User = require('../models/userModel');
+const bcrypt = require('bcrypt') ;
+const jwt = require('jsonwebtoken');
 
-exports.register = async(req,res) => {
-   try {
-      const {email} = req.body 
-const isExistingUser = await User.findOne({email}) ;
+exports.signUp = async (req, res, next) => {
+  try {
+    const { email } = req.body;
 
-if(isExistingUser){
-  return   res.status(400).send("User already exists")
-}
-const user = await User.create(req.body)
-if(user){
-   return  res.status(201).json({
-          message : "User created Successfully",
-          data : user
-     })
-}
-   } catch (error) {
-     res.status(400).send(error)
-   }
-}
+    const isExistingUser = await User.findOne({ email });
+
+    //check if user already exists
+    if (isExistingUser) {
+      throw new Error('User already exists');
+    }
+    const user = await User.create(req.body);
+    if (user) {
+      return res.status(201).json({
+        message: 'User registered successfully',
+        data: user,
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 
 
-exports.login = async(req,res) => {
+exports.login = async(req,res,next) => {
+  //step 1 check if user is registered 
 try {
-     //step1 check email if user exists
-const {email , password} = req.body ;
-const user = await User.findOne({email})
-console.log(user)
+  const {email , password} = req.body ;
+  const user = await User.findOne({email}) ;
 if(!user){
-     return res.status(400).send('User is not registered , Please register and try again')
-}
-     //step2 match the password
-const isPasswordMatch = await bcrypt.compare(password , user.password)
-
-if(!isPasswordMatch){
-   return  res.status(400).send("Password do not match")
+  throw new Error("User is not registered")
 }
 
-res.status(200).json({
-     message : "Login Successfull"
-})
+console.log(password , user)
+ //step2 check if user password matched
+const isPasswordMatch = await bcrypt.compare(password,user.password)
+ if(!isPasswordMatch){
+  throw new Error("Password do not match, Please try again")
+ }
 
+ //generate the tooken and send it to the frontend
+ const token = jwt.sign({id : user._id , name:user.name, role:user.role} , 'this-is-my-secret-string' , {expiresIn : '30d'} )
+  
+ res.status(200).json({ 
+  message : "Login Successfully",
+  token
+ })
+ 
 } catch (error) {
-     res.status(400).send(error)
+  next(error)
 }
+ 
 }
 
+exports.googleAuth = async(req,res) => {
+  try {
+     console.log(req.user)
+  const user = req.user
+  const token = jwt.sign({id : user._id , name:user.name, role:user.role} , 'this-is-my-secret-string' , {expiresIn : '30d'} )
 
-// model=>controller=>routes=>app.js
+res.redirect(`http://localhost:5173/auth/google/callback?token=${token}&role=${user.role}`)
+ 
+  } catch (error) {
+    next(error)
+  }
+ 
+}
